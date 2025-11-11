@@ -5,9 +5,9 @@
 //  Created by Wise on 11/11/25.
 //
 
-struct moeda: Codable {
+struct Moeda: Codable {
     var nome: String
-    var pais: [String]
+    var paises: [String]
     var valorReal: Double
     var sigla: String
 }
