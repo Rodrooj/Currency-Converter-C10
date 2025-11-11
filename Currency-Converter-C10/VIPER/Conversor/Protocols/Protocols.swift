@@ -22,3 +22,8 @@ protocol ConversorRouter: AnyObject {
     
 }
 
+protocol Conversao {
+    var moedaOrigem: Moeda { get }
+    
+    func converterParaReal(v: Double) -> Double
+}
