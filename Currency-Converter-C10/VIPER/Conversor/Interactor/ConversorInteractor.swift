@@ -12,6 +12,24 @@ enum TipoMoeda: Codable {
     case euro
 }
 
+class Interactor: InteractorToPresenter {
+    var valorConvertido: Double
+    var moedaEscolhida: Moeda
+    var conversor: ConversorAdapter
+    
+    init(valorConvertido: Double, moedaEscolhida: Moeda) {
+        self.valorConvertido = valorConvertido
+        self.moedaEscolhida = moedaEscolhida
+        self.conversor = ConversorAdapter(conversorAntigo: ConversorAntigo(), moedaOrigem: self.moedaEscolhida)
+    }
+    
+    func enviarValorConvertido(_ valor: Double) -> Double {
+        return conversor.converterParaReal(v: valor)
+    }
+    
+    
+}
+
 class API {
     func criarMoeda(type: TipoMoeda) -> Moeda {
         switch type {

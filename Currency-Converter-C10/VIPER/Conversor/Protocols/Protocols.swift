@@ -32,12 +32,12 @@ protocol PresenterToInteractor: AnyObject {
 protocol InteractorToPresenter: AnyObject {
     var valorConvertido: Double {get set}
     
-    func enviarValorConvertido(_ valor: Double)
+    func enviarValorConvertido(_ valor: Double) -> Double
     
 }
 
 protocol PresenterToRouter: AnyObject {
-    func criarViewHistorico() -> UIViewController
+    func pedirViewHistorico() -> UIViewController
 }
 
 protocol Conversao {
