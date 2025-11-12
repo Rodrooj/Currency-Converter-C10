@@ -52,7 +52,7 @@ class ConversorAdapter: Conversao {
     
     func converterParaReal(v: Double) -> Double {
         var valorDolar = conversorAntigo.converterRealParaDolar(v: v)
-        valorDolar /= conversorAntigo.dolar
+        valorDolar *= conversorAntigo.dolar
         let resul = valorDolar * moedaOrigem.valorReal
         return resul
     }
