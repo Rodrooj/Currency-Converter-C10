@@ -5,9 +5,9 @@
 //  Created by Wise on 11/11/25.
 //
 
-struct registro: Codable {
-    var moedaOrigem: [moeda]
-    var moedaDestino: [moeda]
+struct Registro: Codable {
+    var moedaOrigem: [Moeda]
+    var moedaDestino: [Moeda]
     var valorConvertido: Double
     var dataConversao: String
 }

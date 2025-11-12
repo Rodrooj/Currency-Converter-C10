@@ -6,7 +6,7 @@
 //
 
 // MARK: Factory
-enum TipoMoeda {
+enum TipoMoeda: Codable {
     case real
     case dolar
     case euro
