@@ -36,7 +36,7 @@ class ConversorAntigo {
     }
     
     func converterRealParaDolar(v: Double) -> Double {
-        return v * dolar
+        return v / dolar
     }
 }
 
