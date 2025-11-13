@@ -7,7 +7,8 @@
 
 import UIKit
 
-class HistoiricoView: UIViewController {
+class HistoricoView: UIViewController {
+    var presenter: ViewToPresenterHistorico?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,5 +16,11 @@ class HistoiricoView: UIViewController {
     }
 
 
+}
+
+extension HistoricoView: PresenterToViewHistorico {
+    func mostrarRegistroFormatado(_ dado: Registro) {
+        
+    }
 }
 
