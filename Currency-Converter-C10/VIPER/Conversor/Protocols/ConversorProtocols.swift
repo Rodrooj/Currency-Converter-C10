@@ -6,12 +6,12 @@
 //
 
 
-protocol ConversorView: AnyObject {
+protocol ConversorViewProtocol: AnyObject {
     
 }
 
 protocol ConversorPresenter: AnyObject {
-    
+    func viewDidLoad()
 }
 
 protocol ConversorInteractor: AnyObject {
