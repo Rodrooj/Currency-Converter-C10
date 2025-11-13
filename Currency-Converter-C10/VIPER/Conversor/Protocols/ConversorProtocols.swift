@@ -14,7 +14,7 @@ protocol ViewToPresenter: AnyObject {
     
 //    var valorInserido: Double? { get}
 //    var MoedaEscolhida: Moeda? { get}
-
+    func viewDidLoad()
     func BotaoHistoricoPressionado()
     func BotaoConversaoPressionado()
 }

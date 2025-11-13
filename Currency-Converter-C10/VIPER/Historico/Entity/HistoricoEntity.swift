@@ -6,8 +6,8 @@
 //
 
 struct Registro: Codable {
-    let valorOriginal: Double
-    let moedaOriginal: Moeda
-    let valorConvertido: Double
-    // Arranjar uma forma de guardar a data da conversão aqui
+    var moedaOrigem: [moeda]
+    var moedaDestino: [moeda]
+    var valorConvertido: Double
+    var dataConversao: String
 }
