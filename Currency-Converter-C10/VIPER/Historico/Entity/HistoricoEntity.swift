@@ -6,8 +6,8 @@
 //
 
 struct Registro: Codable {
-    var moedaOrigem: [moeda]
-    var moedaDestino: [moeda]
+    var moedaOrigem: [Moeda]
+    var moedaDestino: [Moeda]
     var valorConvertido: Double
     var dataConversao: String
 }

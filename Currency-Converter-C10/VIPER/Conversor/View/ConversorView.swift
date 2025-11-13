@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ConversorView: UIView, ConversorViewProtocol{
+class ConversorView: UIView{
     
     override init(frame: CGRect) {
            super.init(frame: frame)
@@ -21,10 +21,18 @@ class ConversorView: UIView, ConversorViewProtocol{
             UISetup()
         }
     
-    private var moedaOrige: UITextField = {
+    var moedaPicker: UIPickerView = {
+        let pv = UIPickerView()
+        pv.translatesAutoresizingMaskIntoConstraints = false
+        return pv
+    }()
+    var moedaSelecionada:Moeda?
+    
+    var moedaOrige: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Moeda estrangeira"
         tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.keyboardType = .numberPad
         return tf
     }()
     
@@ -35,7 +43,7 @@ class ConversorView: UIView, ConversorViewProtocol{
         return lb
     }()
     
-    private var converter: UIButton = {
+    let converterB: UIButton = {
         let bt = UIButton()
         bt.setTitle("Converter", for: .normal)
         bt.backgroundColor = .systemBlue
@@ -43,6 +51,7 @@ class ConversorView: UIView, ConversorViewProtocol{
         bt.layer.cornerRadius = 8
         return bt
     }()
+    
     
     private var historico: UIButton = {
         let bt = UIButton()
@@ -65,70 +74,45 @@ class ConversorView: UIView, ConversorViewProtocol{
         //Adiciona na view
         addSubview(moedaOrige)
         addSubview(moedaFinal)
-        addSubview(converter)
+        addSubview(converterB)
         addSubview(historico)
+        addSubview(moedaPicker)
         
         //Cria os tamanhos e limites dos elementos
         NSLayoutConstraint.activate([
             //Centraliza no meio horizontal
+            moedaPicker.centerXAnchor.constraint(equalTo: leftAnchor, constant: 120),
             moedaOrige.centerXAnchor.constraint(equalTo: leftAnchor, constant: 120),
             moedaFinal.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -80),
-            converter.centerXAnchor.constraint(equalTo: centerXAnchor),
+            converterB.centerXAnchor.constraint(equalTo: centerXAnchor),
             historico.centerXAnchor.constraint(equalTo: centerXAnchor),
             //Coloca no topo (safearealayoutGuide.topanchor) porem a 200 pontos abaixo
+            moedaPicker.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 150),
             moedaOrige.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 200),
             moedaFinal.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 200),
-            converter.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 250),
+            converterB.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 250),
             historico.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 300),
             
             //Fixa a largura
+            moedaPicker.widthAnchor.constraint(equalToConstant: 143),
             moedaOrige.widthAnchor.constraint(equalToConstant: 143),
             moedaFinal.widthAnchor.constraint(equalToConstant: 143),
-            converter.widthAnchor.constraint(equalToConstant: 150),
+            converterB.widthAnchor.constraint(equalToConstant: 150),
             historico.widthAnchor.constraint(equalToConstant: 150),
             //Fixa a altura
+            moedaPicker.heightAnchor.constraint(equalToConstant: 40),
             moedaOrige.heightAnchor.constraint(equalToConstant: 40),
             moedaFinal.heightAnchor.constraint(equalToConstant: 40)
         ])
         
+        
+            
+        }
+        
     }
-}
+
 
 #Preview {
     ConversorView()
 }
 
-import UIKit
-
-class ConversorView: UIViewController {
-    
-    // variavel temporária para permitir comunicação entre as camadas
-    // É nela que o valor convertido chega depois de passar por todas as camadas do app
-    var ValorConvertido: Double?
-    var presenter: ViewToPresenter?
-    
-
-    override func viewDidLoad() {
-        
-        
-       
-        // Isso vai dentro de um botão
-        presenter?.BotaoConversaoPressionado()
-        
-        presenter?.BotaoHistoricoPressionado()
-        
-        
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-}
-
-
-// É através dessa extensão que essa classe se conforma ao presenter.view. Pois ela é do tipo PresenterToView. No caso, é de onde o dado chega da presenter.
-extension ConversorView: PresenterToView {
-    
-    // Aqui a view estaria armazenando em Valor convertido o valor que veio da presenter, que veio do interactor
-    func mostrarValorConvertido(_ valor: Double) {
-        ValorConvertido = valor
-    }
-}

@@ -10,7 +10,7 @@ import UIKit
 class ConversorRouter: PresenterModulos {
     func criarNavegacao() -> UIViewController {
         // Primeiramente eu instanciei cada camada
-        var view = ConversorView()
+        var view = ConversorViewController()
         var interactor = ConversorInteractor()
         var presenter = ConversorPresenter()
         var router = ConversorRouter()

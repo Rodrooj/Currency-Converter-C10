@@ -11,3 +11,9 @@ struct Moeda: Codable {
     var valorReal: Double
     var sigla: String
 }
+
+enum TipoMoeda: Codable, CaseIterable {
+    case real
+    case dolar
+    case euro
+}

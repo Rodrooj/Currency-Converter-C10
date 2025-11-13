@@ -6,21 +6,19 @@
 //
 
 // MARK: Factory
-enum TipoMoeda: Codable {
-    case real
-    case dolar
-    case euro
-}
+
+import Foundation
+
 
 class API {
-    func criarMoeda(type: TipoMoeda) -> Moeda {
+    static func criarMoeda(type: TipoMoeda) -> Moeda {
         switch type {
         case .real:
             return Moeda(nome: "real", paises: ["Brasil"], valorReal: 1.0, sigla: "BRL")
         case .dolar:
             return Moeda(nome: "dolar", paises: ["United States"], valorReal: 5.0, sigla: "USD")
         case .euro:
-            return Moeda(nome: "euro", paises: ["Italy, Spain"], valorReal: 6.0, sigla: "EUR")
+            return Moeda(nome: "euro", paises: ["Italy", "Spain"], valorReal: 6.0, sigla: "EUR")
         }
     }
 }
@@ -66,18 +64,22 @@ class ConversorInteractor: PresenterToInteractor {
     // Regra para a comunicação com camadas
     weak var presenter: InteractorToPresenter?
     
-    // Conformidade com o protocolo
-    var valorInserido: Double?
-    var MoedaEscolhida: Moeda?
+    func callAPI(completion: @escaping ([Moeda]) -> Void) {
+           // Simulate network delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let moedas = TipoMoeda.allCases.map { API.criarMoeda(type: $0) }
+            completion(moedas)
+        }
+    }
     
     
     func PedirConversao(valor: Double, moeda: Moeda){
         
-        self.valorInserido = valor
-        self.MoedaEscolhida = moeda
+        var valorInserido = valor
+        var MoedaEscolhida = moeda
         
         let conversorAntigo = ConversorAntigo()
-        let conversorAdaptado = ConversorAdapter(conversorAntigo: conversorAntigo, moedaOrigem: moeda)
+        let conversorAdaptado = ConversorAdapter(conversorAntigo: conversorAntigo, moedaOrigem: MoedaEscolhida)
         
         var valorConvertidoParaReais = conversorAdaptado.converterParaReal(v: valor)
         

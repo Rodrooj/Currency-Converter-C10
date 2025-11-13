@@ -8,9 +8,10 @@
 class HistoricoInteractor: PresenterToInteractorHistorico {
     var presenter: InteractorToPresenterHistorico?
     
-    func obterHistorico() {
+    func obterHistorico(dado: Registro) {
         // Código que vai obter os dados da conversão e transformar em histórico
-        presenter?.enviarDados(<#T##dado: Registro##Registro#>)
+        
+        presenter?.enviarDados(dado)
     }
 }
 

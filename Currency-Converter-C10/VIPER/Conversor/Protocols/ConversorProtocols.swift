@@ -16,24 +16,24 @@ protocol ViewToPresenter: AnyObject {
 //    var MoedaEscolhida: Moeda? { get}
     func viewDidLoad()
     func BotaoHistoricoPressionado()
-    func BotaoConversaoPressionado()
+    func BotaoConversaoPressionado(valor: Double, moeda: Moeda)
 }
 
 protocol PresenterToView: AnyObject {
      func mostrarValorConvertido(_ valor: Double)
+     func pegarMoedas(_ moedas: [Moeda])
 }
 
 protocol PresenterToInteractor: AnyObject {
     var presenter: InteractorToPresenter? {get set}
     
-    var valorInserido: Double? {get}
-    var MoedaEscolhida: Moeda? {get}
-    
+    func callAPI(completion: @escaping ([Moeda]) -> Void)
     func PedirConversao(valor: Double, moeda: Moeda)
 }
 
 protocol InteractorToPresenter: AnyObject {
     func enviarValorConvertido(valor: Double)
+    func enviarMoedas()
     
 }
 

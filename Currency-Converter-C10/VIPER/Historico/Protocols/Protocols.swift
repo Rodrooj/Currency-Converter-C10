@@ -19,7 +19,7 @@ protocol ViewToPresenterHistorico: AnyObject {
 protocol PresenterToInteractorHistorico {
     var presenter: InteractorToPresenterHistorico? { get set }
     
-    func obterHistorico()
+    func obterHistorico(dado: Registro)
 }
 
 protocol InteractorToPresenterHistorico {

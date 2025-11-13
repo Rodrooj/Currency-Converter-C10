@@ -15,6 +15,6 @@ extension HistoricoPresenter: InteractorToPresenterHistorico {
     func enviarDados(_ dado: Registro) {
         
         
-        view?.mostrarRegistroFormatado(<#T##dado: Registro##Registro#>)
+        view?.mostrarRegistroFormatado(dado)
     }
 }
