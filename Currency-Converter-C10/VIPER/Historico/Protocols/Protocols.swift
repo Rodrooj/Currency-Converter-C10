@@ -10,6 +10,7 @@ import UIKit
 protocol ViewToPresenterHistorico: AnyObject {
     var view: PresenterToViewHistorico? { get set }
     var interactor: PresenterToInteractorHistorico? { get set }
+    func viewDidLoad()
     // posteriormente fazer o router
     
     // aqui vão as funções que o presenter pode pedir para o interactor. Como nós não decidimos nada, não coloquei nada aqui.
@@ -27,7 +28,10 @@ protocol InteractorToPresenterHistorico {
 }
 
 protocol PresenterToViewHistorico {
-    func mostrarRegistroFormatado(_ dados: String)// Na view, você chama uma extensão desse tipo, cria a função e guarda os registros formatados da melhor forma
+    func mostrarRegistroFormatado(_ dados: String)
+    var presenter: ViewToPresenterHistorico? { get set }
+    
+    
 }
 
 protocol HistoricoModulos {

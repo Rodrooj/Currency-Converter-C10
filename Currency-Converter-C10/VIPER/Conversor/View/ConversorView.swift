@@ -58,7 +58,7 @@ class ConversorView: UIView{
     }()
     
     
-    private var historico: UIButton = {
+    var historico: UIButton = {
         let bt = UIButton()
         bt.setTitle("Histórico", for: .normal)
         bt.setTitleColor(.systemBlue, for: .normal)

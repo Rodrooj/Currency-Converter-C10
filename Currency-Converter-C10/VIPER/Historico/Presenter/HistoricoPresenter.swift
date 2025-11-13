@@ -6,6 +6,10 @@
 //
 
 class HistoricoPresenter: ViewToPresenterHistorico {
+    func viewDidLoad() {
+        
+    }
+    
     var view: PresenterToViewHistorico?
     var interactor: PresenterToInteractorHistorico?
     // Futuro Router

@@ -41,6 +41,11 @@ final class ConversorViewController: UIViewController{
     
     private func bindings() {
         conversorView.converterB.addTarget(self, action: #selector(converterFunc), for: .touchUpInside)
+        conversorView.historico.addTarget(self, action: #selector(goToHistorico), for: .touchUpInside)
+    }
+    
+    @objc private func goToHistorico(){
+        presenter?.BotaoHistoricoPressionado()
     }
     
     @objc private func converterFunc() {
@@ -56,8 +61,6 @@ final class ConversorViewController: UIViewController{
     
     private func delegates(){
         conversorView.moedaOrige.delegate = self
-//        conversorView.moedaPicker.delegate = self
-//        conversorView.moedaPicker.dataSource = self
     }
     
     
@@ -102,28 +105,5 @@ extension ConversorViewController: UITextFieldDelegate {
     }
 }
 
-extension ConversorViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return moedasV[row].nome
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let moedaSelecionada = moedasV[row]
-        conversorView.moedaSelecionada = moedaSelecionada
-        
-    }
-}
-    extension ConversorViewController: UIPickerViewDataSource {
-        func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            return 1
-        }
-        
-        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            return moedasV.count
-            print(moedasV.count)
-            print(moedasV)
-        }
-        
-        
-    }
+
 

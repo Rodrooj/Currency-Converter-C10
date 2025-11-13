@@ -10,7 +10,13 @@ import UIKit
 class HistoricoRouter: HistoricoModulos {
     func criarNavegacaoHistorico() -> UIViewController {
         // Navegação entre arquivos
-        var view = HistoricoView()
+        let storyboard = UIStoryboard(name: "Historico", bundle: nil)
+        
+        
+        
+        var view = storyboard.instantiateViewController(withIdentifier: "Historico") as! PresenterToViewHistorico
+        
+        
         var interactor = HistoricoInteractor()
         var presenter = HistoricoPresenter()
         var router = HistoricoRouter()
@@ -21,6 +27,6 @@ class HistoricoRouter: HistoricoModulos {
         presenter.interactor = interactor
         interactor.presenter = presenter
         
-        return view
+        return view as! UIViewController
     }
 }

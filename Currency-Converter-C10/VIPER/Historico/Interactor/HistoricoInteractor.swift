@@ -31,9 +31,9 @@ class RegistroAdapter: Conversao {
     }
     
     func adaptarRegistro() -> Registro {
-        guard let valor = valorInserido else { return Registro(valorOriginal: 0, moedaOriginal: "", valorConvertido: 0) }
+        guard let valor = valorInserido else { return Registro(valorOriginal: 0, moedaOriginal: "", valorConvertido: 0, dataConversao: "") }
         
-        var registro = Registro(valorOriginal: valor, moedaOriginal: moedaOrigem.nome, valorConvertido: converterParaReal(v: valor))
+        var registro = Registro(valorOriginal: valor, moedaOriginal: moedaOrigem.nome, valorConvertido: converterParaReal(v: valor), dataConversao: "")
         
         return registro
 
