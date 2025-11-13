@@ -14,7 +14,7 @@ class ConversorPresenter: ViewToPresenter {
     
     // Regra para a comunicação entre camadas
     var interactor: PresenterToInteractor?
-    var router: PresenterModulos?
+    var router: RouterModulos?
     weak var view: PresenterToView?
     
     // Conformidade com o protocolo

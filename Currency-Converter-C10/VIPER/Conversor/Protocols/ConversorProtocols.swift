@@ -10,7 +10,7 @@ import UIKit
 protocol ViewToPresenter: AnyObject {
     var view: PresenterToView? {get set}
     var interactor: PresenterToInteractor? {get set}
-    var router: PresenterModulos? {get set}
+    var router: RouterModulos? {get set}
     
 //    var valorInserido: Double? { get}
 //    var MoedaEscolhida: Moeda? { get}
@@ -37,7 +37,7 @@ protocol InteractorToPresenter: AnyObject {
     
 }
 
-protocol PresenterModulos: AnyObject {
+protocol RouterModulos: AnyObject {
     func criarNavegacao() -> UIViewController
 }
 

@@ -13,8 +13,22 @@ class HistoricoPresenter: ViewToPresenterHistorico {
 
 extension HistoricoPresenter: InteractorToPresenterHistorico {
     func enviarDados(_ dado: Registro) {
+        var moedaOriginalFormatada = "$"
         
+        switch dado.moedaOriginal {
+        case "euro":
+            moedaOriginalFormatada = "€"
+            break
+        case "dolar":
+            moedaOriginalFormatada = "US$"
+            break
+        default:
+            print("Moeda não encontrada")
+        }
         
-        view?.mostrarRegistroFormatado(dado)
+        // Conversão de US$30: R$150
+        var textoFormatado = "Conversão de \(moedaOriginalFormatada)\(dado.valorOriginal): R$\(dado.valorConvertido)"
+    
+        view?.mostrarRegistroFormatado(textoFormatado)
     }
 }
