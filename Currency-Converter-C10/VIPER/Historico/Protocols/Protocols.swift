@@ -27,7 +27,7 @@ protocol InteractorToPresenterHistorico {
 }
 
 protocol PresenterToViewHistorico {
-    func mostrarRegistroFormatado(_ dado: Registro)// Na view, você chama uma extensão desse tipo, cria a função e guarda os registros formatados da melhor forma
+    func mostrarRegistroFormatado(_ dados: String)// Na view, você chama uma extensão desse tipo, cria a função e guarda os registros formatados da melhor forma
 }
 
 protocol HistoricoModulos {
