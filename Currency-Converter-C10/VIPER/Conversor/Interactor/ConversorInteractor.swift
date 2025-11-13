@@ -69,6 +69,7 @@ class ConversorInteractor: PresenterToInteractor {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let moedas = TipoMoeda.allCases.map { API.criarMoeda(type: $0) }
             completion(moedas)
+            print("Moedas recebidas:", moedas)
         }
     }
     

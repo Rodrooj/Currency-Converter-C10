@@ -19,6 +19,10 @@ class HistoricoView: UIViewController {
 }
 
 extension HistoricoView: PresenterToViewHistorico {
+    func mostrarRegistroFormatado(_ dados: String) {
+        
+    }
+    
     func mostrarRegistroFormatado(_ dado: Registro) {
         
     }

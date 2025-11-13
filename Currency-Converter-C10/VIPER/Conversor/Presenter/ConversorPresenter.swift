@@ -41,11 +41,9 @@ extension ConversorPresenter: InteractorToPresenter {
     }
     
     func enviarMoedas() {
-        var moedas: [Moeda] = []
-        
-        interactor?.callAPI{
-            moedas.append(contentsOf: $0)
+        interactor?.callAPI { moedas in
+            self.view?.pegarMoedas(moedas)
+            print("Moedas recebidas: presenter", moedas)
         }
-        view?.pegarMoedas(moedas)
     }
 }

@@ -6,6 +6,10 @@
 //
 
 class HistoricoInteractor: PresenterToInteractorHistorico {
+    func obterHistorico(dado: Registro) {
+        
+    }
+    
     var presenter: InteractorToPresenterHistorico?
     var registroAdapter: RegistroAdapter?
     

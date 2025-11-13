@@ -15,16 +15,15 @@ final class ConversorViewController: UIViewController{
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+            fatalError("Use init() instead, this VC is programmatic only.")
+        }
     
 
     
     // variavel temporária para permitir comunicação entre as camadas
     // É nela que o valor convertido chega depois de passar por todas as camadas do app
     var ValorConvertido: Double?
-    var moedasV: [Moeda]?
+    var moedasV: [Moeda] = []
     var presenter: ViewToPresenter?
     
     let conversorView = ConversorView()
@@ -57,12 +56,27 @@ final class ConversorViewController: UIViewController{
     
     private func delegates(){
         conversorView.moedaOrige.delegate = self
-        conversorView.moedaPicker.delegate = self
-        conversorView.moedaPicker.dataSource = self
+//        conversorView.moedaPicker.delegate = self
+//        conversorView.moedaPicker.dataSource = self
     }
     
     
+    func updateDropdown() {
+        let actions = moedasV.map { moeda in
+            UIAction(title: moeda.nome) { _ in
+                self.conversorView.moedaSelecionada = moeda
+                self.conversorView.moedaPicker.setTitle(moeda.nome, for: .normal)
+            }
+        }
+
+        conversorView.moedaPicker.menu = UIMenu(children: actions)
+        conversorView.moedaPicker.showsMenuAsPrimaryAction = true
+    }
+
+    
 }
+
+
 
 
 // É através dessa extensão que essa classe se conforma ao presenter.view. Pois ela é do tipo PresenterToView. No caso, é de onde o dado chega da presenter.
@@ -71,11 +85,12 @@ extension ConversorViewController: PresenterToView {
     
     // Aqui a view estaria armazenando em Valor convertido o valor que veio da presenter, que veio do interactor
     func mostrarValorConvertido(_ valor: Double) {
-        ValorConvertido = valor
+        conversorView.moedaFinal.text = String(valor)
     }
     
     func pegarMoedas(_ moedas: [Moeda]) {
         moedasV = moedas
+        updateDropdown()
     }
 }
 
@@ -89,11 +104,11 @@ extension ConversorViewController: UITextFieldDelegate {
 
 extension ConversorViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return moedasV?[row].nome
+        return moedasV[row].nome
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let moedaSelecionada = moedasV?[row]
+        let moedaSelecionada = moedasV[row]
         conversorView.moedaSelecionada = moedaSelecionada
         
     }
@@ -104,7 +119,9 @@ extension ConversorViewController: UIPickerViewDelegate {
         }
         
         func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            return TipoMoeda.allCases.count
+            return moedasV.count
+            print(moedasV.count)
+            print(moedasV)
         }
         
         

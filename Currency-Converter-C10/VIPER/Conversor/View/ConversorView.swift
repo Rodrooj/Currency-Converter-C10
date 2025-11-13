@@ -21,11 +21,16 @@ class ConversorView: UIView{
             UISetup()
         }
     
-    var moedaPicker: UIPickerView = {
-        let pv = UIPickerView()
-        pv.translatesAutoresizingMaskIntoConstraints = false
-        return pv
+    let moedaPicker: UIButton = {
+        let bt = UIButton(type: .system)
+        bt.setTitle("Selecione a moeda", for: .normal)
+        bt.translatesAutoresizingMaskIntoConstraints = false
+        bt.layer.borderColor = UIColor.systemBlue.cgColor
+        bt.layer.borderWidth = 1
+        bt.layer.cornerRadius = 8
+        return bt
     }()
+
     var moedaSelecionada:Moeda?
     
     var moedaOrige: UITextField = {
@@ -36,7 +41,7 @@ class ConversorView: UIView{
         return tf
     }()
     
-    private var moedaFinal: UILabel = {
+    var moedaFinal: UILabel = {
         let lb = UILabel()
         lb.text = "Moeda final"
         lb.translatesAutoresizingMaskIntoConstraints = false
@@ -100,7 +105,7 @@ class ConversorView: UIView{
             converterB.widthAnchor.constraint(equalToConstant: 150),
             historico.widthAnchor.constraint(equalToConstant: 150),
             //Fixa a altura
-            moedaPicker.heightAnchor.constraint(equalToConstant: 40),
+            moedaPicker.heightAnchor.constraint(equalToConstant: 50),
             moedaOrige.heightAnchor.constraint(equalToConstant: 40),
             moedaFinal.heightAnchor.constraint(equalToConstant: 40)
         ])
