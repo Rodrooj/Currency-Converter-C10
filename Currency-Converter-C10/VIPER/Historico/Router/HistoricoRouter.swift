@@ -5,3 +5,6 @@
 //  Created by Wise on 11/11/25.
 //
 
+class HistoricoRouter {
+    
+}

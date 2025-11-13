@@ -52,9 +52,39 @@ class ConversorAdapter: Conversao {
     
     func converterParaReal(v: Double) -> Double {
         var valorDolar = conversorAntigo.converterRealParaDolar(v: v)
-        valorDolar *= conversorAntigo.dolar
-        let resul = valorDolar * moedaOrigem.valorReal
-        return resul
+        
+        //fiz alterações pra facilitar meu entendimento na hora de passar as coisas pra frente
+        var valorEmReais = valorDolar * conversorAntigo.dolar
+        return valorEmReais * moedaOrigem.valorReal
     }
     
 }
+
+// MARK: Classe ConversorInteractor
+
+class ConversorInteractor: PresenterToInteractor {
+    // Regra para a comunicação com camadas
+    weak var presenter: InteractorToPresenter?
+    
+    // Conformidade com o protocolo
+    var valorInserido: Double?
+    var MoedaEscolhida: Moeda?
+    
+    
+    func PedirConversao(valor: Double, moeda: Moeda){
+        
+        self.valorInserido = valor
+        self.MoedaEscolhida = moeda
+        
+        let conversorAntigo = ConversorAntigo()
+        let conversorAdaptado = ConversorAdapter(conversorAntigo: conversorAntigo, moedaOrigem: moeda)
+        
+        var valorConvertidoParaReais = conversorAdaptado.converterParaReal(v: valor)
+        
+        // Ele pega o valor que será convertido aqui nessa classe e passa para o presenter através da função enviarValorConvertido.
+        presenter?.enviarValorConvertido(valor: valorConvertidoParaReais)
+    }
+    
+
+}
+

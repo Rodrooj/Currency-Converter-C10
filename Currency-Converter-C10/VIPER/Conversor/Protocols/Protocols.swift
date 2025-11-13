@@ -8,36 +8,37 @@
 import UIKit
 
 protocol ViewToPresenter: AnyObject {
-    var valorInserido: Double { get}
-    var MoedaEscolhida: Moeda { get}
-
+    var view: PresenterToView? {get set}
+    var interactor: PresenterToInteractor? {get set}
+    var router: PresenterModulos? {get set}
     
+//    var valorInserido: Double? { get}
+//    var MoedaEscolhida: Moeda? { get}
+
     func BotaoHistoricoPressionado()
     func BotaoConversaoPressionado()
 }
 
 protocol PresenterToView: AnyObject {
-//    var valorConvertido: Double {get set}
-    
      func mostrarValorConvertido(_ valor: Double)
 }
 
 protocol PresenterToInteractor: AnyObject {
-    var valorInserido: Double {get}
-    var MoedaEscolhida: Moeda {get}
+    var presenter: InteractorToPresenter? {get set}
     
-    func PedirConversao()
+    var valorInserido: Double? {get}
+    var MoedaEscolhida: Moeda? {get}
+    
+    func PedirConversao(valor: Double, moeda: Moeda)
 }
 
 protocol InteractorToPresenter: AnyObject {
-    var valorConvertido: Double {get set}
-    
-    func enviarValorConvertido(_ valor: Double)
+    func enviarValorConvertido(valor: Double)
     
 }
 
-protocol PresenterToRouter: AnyObject {
-    func criarViewHistorico() -> UIViewController
+protocol PresenterModulos: AnyObject {
+    func criarNavegacao() -> UIViewController
 }
 
 protocol Conversao {
