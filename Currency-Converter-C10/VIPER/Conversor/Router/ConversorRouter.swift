@@ -8,12 +8,17 @@
 import UIKit
 
 class ConversorRouter: RouterModulos {
+    func abrirTelaHistorico(view: UIViewController) {
+        let telaHistorico = HistoricoView()
+        view.present(telaHistorico, animated: true)
+    }
+    
     func criarNavegacao() -> UIViewController {
         // Primeiramente eu instanciei cada camada
-        var view = ConversorViewController()
-        var interactor = ConversorInteractor()
-        var presenter = ConversorPresenter()
-        var router = ConversorRouter()
+        let view = ConversorViewController()
+        let interactor = ConversorInteractor()
+        let presenter = ConversorPresenter()
+        let router = ConversorRouter()
 
         // Depois, é necessário conectar cada camada de acordo com a passagem de dados que é feita entre elas. Cada classe precisa conformar com o protocolo correto para isso dar certo. Isso é a alma do negócio, por que 
         view.presenter = presenter
@@ -28,10 +33,11 @@ class ConversorRouter: RouterModulos {
 }
 
 // Não consegui fazer a navegação, pois a ausência de telas na parte do Historico estava me dando muito trabalho. Acabei não aplicando a navegação em si do Router.
-extension ConversorRouter {
+//extension ConversorRouter {
 //    func abrirTelaHistorico(view: UIViewController) {
-//        let telaHistorico = HistoricoRouter().criarNavegacao()
+//        let telaHistorico = HistoricoView()
 //        
 //        view.present(telaHistorico, animated: true)
 //    }
-}
+//}
+

@@ -20,10 +20,14 @@ class ConversorPresenter: ViewToPresenter {
     // Conformidade com o protocolo
     
     func BotaoHistoricoPressionado() {
-//        if let viewController = view as? UIViewController {
-//            router?.abrirTelaHistorico(view: viewController)
-//        }
-        print("Coisa para se preocupar no futuro")
+       
+        guard let viewAtual = self.view as? UIViewController else {
+                print("Erro: A view do presenter não é um UIViewController.")
+                return
+            }
+            
+            // pede ao router para abrir a tela a partir da view atual
+            router?.abrirTelaHistorico(view: viewAtual)
     }
     
     func BotaoConversaoPressionado(valor: Double, moeda: Moeda) {

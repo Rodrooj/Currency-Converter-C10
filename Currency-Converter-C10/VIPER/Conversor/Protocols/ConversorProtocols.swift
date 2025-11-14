@@ -39,6 +39,7 @@ protocol InteractorToPresenter: AnyObject {
 
 protocol RouterModulos: AnyObject {
     func criarNavegacao() -> UIViewController
+    func abrirTelaHistorico(view: UIViewController) 
 }
 
 protocol Conversao {

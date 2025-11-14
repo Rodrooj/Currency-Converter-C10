@@ -37,17 +37,19 @@ final class ConversorViewController: UIViewController{
         presenter?.viewDidLoad()
         bindings()
         delegates()
+        self.title = "Conversor de Moedas"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func bindings() {
         conversorView.converterB.addTarget(self, action: #selector(converterFunc), for: .touchUpInside)
         conversorView.historico.addTarget(self, action: #selector(goToHistorico), for: .touchUpInside)
+        
     }
     
-    @objc private func goToHistorico(){
+    @objc private func goToHistorico() {
         presenter?.BotaoHistoricoPressionado()
     }
-    
     @objc private func converterFunc() {
         // Extrai o valor digitado e chama o presenter com os rótulos corretos
         let texto = conversorView.moedaOrige.text ?? ""

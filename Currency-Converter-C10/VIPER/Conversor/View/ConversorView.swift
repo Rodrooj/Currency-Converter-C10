@@ -35,7 +35,7 @@ class ConversorView: UIView{
     
     var moedaOrige: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Moeda estrangeira"
+        tf.placeholder = "Digite o valor"
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.keyboardType = .numberPad
         return tf
@@ -43,7 +43,7 @@ class ConversorView: UIView{
     
     var moedaFinal: UILabel = {
         let lb = UILabel()
-        lb.text = "Moeda final"
+        lb.text = "Valor em reais"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -108,9 +108,9 @@ class ConversorView: UIView{
             moedaPicker.heightAnchor.constraint(equalToConstant: 50),
             moedaOrige.heightAnchor.constraint(equalToConstant: 40),
             moedaFinal.heightAnchor.constraint(equalToConstant: 40)
+            
+            
         ])
-        
-        
             
         }
         
