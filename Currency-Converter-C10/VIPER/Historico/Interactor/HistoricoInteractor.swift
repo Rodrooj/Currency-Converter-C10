@@ -1,45 +1,14 @@
-//
-//  HistoricoInteractor.swift
-//  Currency-Converter-C10
-//
-//  Created by Wise on 11/11/25.
-//
+import Foundation
 
 class HistoricoInteractor: PresenterToInteractorHistorico {
-    func obterHistorico(dado: Registro) {
-        
-    }
-    
-    var presenter: InteractorToPresenterHistorico?
-    var registroAdapter: RegistroAdapter?
+    weak var presenter: InteractorToPresenterHistorico?
     
     func obterHistorico() {
-        // Código que vai obter os dados da conversão e transformar em histórico
-        guard let adapter = registroAdapter else { return }
-        presenter?.enviarDados(adapter.adaptarRegistro())
-    }
-}
-
-// MARK: Adapter
-class RegistroAdapter: Conversao {
-    var moedaOrigem: Moeda
-    var valorInserido: Double?
-    
-    func converterParaReal(v: Double) -> Double {
-        valorInserido = v
-        return moedaOrigem.valorReal * v
+        let registros = HistoricoManager.shared.registros
+        presenter?.enviarHistorico(registros)
     }
     
-    func adaptarRegistro() -> Registro {
-        guard let valor = valorInserido else { return Registro(valorOriginal: 0, moedaOriginal: "", valorConvertido: 0, dataConversao: "") }
-        
-        var registro = Registro(valorOriginal: valor, moedaOriginal: moedaOrigem.nome, valorConvertido: converterParaReal(v: valor), dataConversao: "")
-        
-        return registro
-
-    }
-    
-    init(moedaOrigem: Moeda) {
-        self.moedaOrigem = moedaOrigem
+    func obterHistorico(dado: Registro) {
+        // Mantido para conformidade com o protocolo, mas não é mais necessário
     }
 }

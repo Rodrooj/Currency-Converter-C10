@@ -21,7 +21,6 @@ class ConversorPresenter: ViewToPresenter {
     
     func BotaoHistoricoPressionado() {
         router?.irParaHistorico(from: view as! UIViewController)
-        print("Coisa para se preocupar no futuro")
     }
     
     func BotaoConversaoPressionado(valor: Double, moeda: Moeda) {
