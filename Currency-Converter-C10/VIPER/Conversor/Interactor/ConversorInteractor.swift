@@ -1,29 +1,37 @@
-//
-//  ConversorInteractor.swift
-//  Currency-Converter-C10
-//
-//  Created by Wise on 11/11/25.
-//
-
-// MARK: Factory
-
 import Foundation
 
+// MARK: - Singleton para gerenciar histórico
+class HistoricoManager {
+    static let shared = HistoricoManager()
+    private(set) var registros: [Registro] = []
+    
+    private init() {}
+    
+    func adicionarRegistro(_ registro: Registro) {
+        registros.insert(registro, at: 0) // Adiciona no início
+        print("Registro adicionado: \(registro)")
+    }
+    
+    func limparHistorico() {
+        registros.removeAll()
+    }
+}
 
+// MARK: - Factory
 class API {
     static func criarMoeda(type: TipoMoeda) -> Moeda {
         switch type {
         case .real:
-            return Moeda(nome: "real", paises: ["Brasil"], valorReal: 1.0, sigla: "BRL")
+            return Moeda(nome: "Real", paises: ["Brasil"], valorReal: 1.0, sigla: "BRL")
         case .dolar:
-            return Moeda(nome: "dolar", paises: ["United States"], valorReal: 5.0, sigla: "USD")
+            return Moeda(nome: "Dólar", paises: ["United States"], valorReal: 5.0, sigla: "USD")
         case .euro:
-            return Moeda(nome: "euro", paises: ["Italy", "Spain"], valorReal: 6.0, sigla: "EUR")
+            return Moeda(nome: "Euro", paises: ["Italy", "Spain"], valorReal: 6.0, sigla: "EUR")
         }
     }
 }
 
-// MARK: Adapter
+// MARK: - Adapter
 class ConversorAntigo {
     var real: Double
     var dolar: Double
@@ -40,7 +48,6 @@ class ConversorAntigo {
 
 class ConversorAdapter: Conversao {
     let conversorAntigo: ConversorAntigo
-    
     var moedaOrigem: Moeda
         
     init(conversorAntigo: ConversorAntigo, moedaOrigem: Moeda) {
@@ -49,23 +56,17 @@ class ConversorAdapter: Conversao {
     }
     
     func converterParaReal(v: Double) -> Double {
-        var valorDolar = conversorAntigo.converterRealParaDolar(v: v)
-        
-        //fiz alterações pra facilitar meu entendimento na hora de passar as coisas pra frente
-        var valorEmReais = valorDolar * conversorAntigo.dolar
+        let valorDolar = conversorAntigo.converterRealParaDolar(v: v)
+        let valorEmReais = valorDolar * conversorAntigo.dolar
         return valorEmReais * moedaOrigem.valorReal
     }
-    
 }
 
-// MARK: Classe ConversorInteractor
-
+// MARK: - Classe ConversorInteractor
 class ConversorInteractor: PresenterToInteractor {
-    // Regra para a comunicação com camadas
     weak var presenter: InteractorToPresenter?
     
     func callAPI(completion: @escaping ([Moeda]) -> Void) {
-           // Simulate network delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let moedas = TipoMoeda.allCases.map { API.criarMoeda(type: $0) }
             completion(moedas)
@@ -73,21 +74,22 @@ class ConversorInteractor: PresenterToInteractor {
         }
     }
     
-    
-    func PedirConversao(valor: Double, moeda: Moeda){
-        
-        var valorInserido = valor
-        var MoedaEscolhida = moeda
-        
+    func PedirConversao(valor: Double, moeda: Moeda) {
         let conversorAntigo = ConversorAntigo()
-        let conversorAdaptado = ConversorAdapter(conversorAntigo: conversorAntigo, moedaOrigem: MoedaEscolhida)
+        let conversorAdaptado = ConversorAdapter(conversorAntigo: conversorAntigo, moedaOrigem: moeda)
         
-        var valorConvertidoParaReais = conversorAdaptado.converterParaReal(v: valor)
+        let valorConvertidoParaReais = conversorAdaptado.converterParaReal(v: valor)
         
-        // Ele pega o valor que será convertido aqui nessa classe e passa para o presenter através da função enviarValorConvertido.
+        // CORREÇÃO: Salvar no histórico
+        let dataAtual = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .short)
+        let registro = Registro(
+            valorOriginal: valor,
+            moedaOriginal: moeda.sigla,
+            valorConvertido: valorConvertidoParaReais,
+            dataConversao: dataAtual
+        )
+        HistoricoManager.shared.adicionarRegistro(registro)
+        
         presenter?.enviarValorConvertido(valor: valorConvertidoParaReais)
     }
-    
-
 }
-

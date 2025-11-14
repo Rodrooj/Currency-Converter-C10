@@ -1,40 +1,28 @@
-//
-//  Protocols.swift
-//  Currency-Converter-C10
-//
-//  Created by Wise on 11/11/25.
-//
-
 import UIKit
 
 protocol ViewToPresenterHistorico: AnyObject {
     var view: PresenterToViewHistorico? { get set }
     var interactor: PresenterToInteractorHistorico? { get set }
     func viewDidLoad()
-    // posteriormente fazer o router
-    
-    // aqui vão as funções que o presenter pode pedir para o interactor. Como nós não decidimos nada, não coloquei nada aqui.
-     
 }
 
-protocol PresenterToInteractorHistorico {
+protocol PresenterToInteractorHistorico: AnyObject {
     var presenter: InteractorToPresenterHistorico? { get set }
-    
-    func obterHistorico(dado: Registro)
+    func obterHistorico()
+    func obterHistorico(dado: Registro) // Mantido para compatibilidade
 }
 
-protocol InteractorToPresenterHistorico {
-    func enviarDados(_ dado: Registro) // Você já envia o pacote completo desde o interactor, chamando no presenter.
+protocol InteractorToPresenterHistorico: AnyObject {
+    func enviarHistorico(_ registros: [Registro])
+    func enviarDados(_ dado: Registro) // Mantido para compatibilidade
 }
 
-protocol PresenterToViewHistorico {
-    func mostrarRegistroFormatado(_ dados: String)
+protocol PresenterToViewHistorico: AnyObject {
     var presenter: ViewToPresenterHistorico? { get set }
-    
-    
+    func mostrarHistorico(_ registros: [Registro])
+    func mostrarRegistroFormatado(_ dados: String) // Mantido para compatibilidade
 }
 
-protocol HistoricoModulos {
+protocol HistoricoModulos: AnyObject {
     func criarNavegacaoHistorico() -> UIViewController
-    
 }

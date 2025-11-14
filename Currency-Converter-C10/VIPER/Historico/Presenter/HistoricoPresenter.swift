@@ -1,38 +1,21 @@
-//
-//  HistoricoPresenter.swift
-//  Currency-Converter-C10
-//
-//  Created by Wise on 11/11/25.
-//
+import Foundation
 
 class HistoricoPresenter: ViewToPresenterHistorico {
-    func viewDidLoad() {
-        
-    }
-    
     var view: PresenterToViewHistorico?
     var interactor: PresenterToInteractorHistorico?
-    // Futuro Router
+    
+    func viewDidLoad() {
+        interactor?.obterHistorico()
+    }
 }
 
 extension HistoricoPresenter: InteractorToPresenterHistorico {
-    func enviarDados(_ dado: Registro) {
-        var moedaOriginalFormatada = "$"
-        
-        switch dado.moedaOriginal {
-        case "euro":
-            moedaOriginalFormatada = "€"
-            break
-        case "dolar":
-            moedaOriginalFormatada = "US$"
-            break
-        default:
-            print("Moeda não encontrada")
-        }
-        
-        // Conversão de US$30: R$150
-        var textoFormatado = "Conversão de \(moedaOriginalFormatada)\(dado.valorOriginal): R$\(dado.valorConvertido)"
+    func enviarHistorico(_ registros: [Registro]) {
+        view?.mostrarHistorico(registros)
+    }
     
-        view?.mostrarRegistroFormatado(textoFormatado)
+    // Método antigo mantido para compatibilidade
+    func enviarDados(_ dado: Registro) {
+        // Não mais utilizado
     }
 }
