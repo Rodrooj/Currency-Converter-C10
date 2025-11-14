@@ -20,9 +20,7 @@ class ConversorPresenter: ViewToPresenter {
     // Conformidade com o protocolo
     
     func BotaoHistoricoPressionado() {
-//        if let viewController = view as? UIViewController {
-//            router?.abrirTelaHistorico(view: viewController)
-//        }
+        router?.irParaHistorico(from: view as! UIViewController)
         print("Coisa para se preocupar no futuro")
     }
     
