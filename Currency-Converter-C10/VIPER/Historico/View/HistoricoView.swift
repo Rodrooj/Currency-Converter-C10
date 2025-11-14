@@ -15,7 +15,7 @@ class HistoricoView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Histórico"
+        
         
         // Configurar table view
         historicoTable.dataSource = self

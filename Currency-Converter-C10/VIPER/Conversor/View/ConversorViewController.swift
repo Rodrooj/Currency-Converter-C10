@@ -43,7 +43,7 @@ final class ConversorViewController: UIViewController{
     
     private func bindings() {
         conversorView.converterB.addTarget(self, action: #selector(converterFunc), for: .touchUpInside)
-        conversorView.historico.addTarget(self, action: #selector(goToHistorico), for: .touchUpInside)
+        conversorView.historicoB.addTarget(self, action: #selector(goToHistorico), for: .touchUpInside)
         
     }
     

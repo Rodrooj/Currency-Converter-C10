@@ -8,116 +8,129 @@
 import Foundation
 import UIKit
 
-class ConversorView: UIView{
+class ConversorView: UIView {
+    
+    // MARK: - Inits
     
     override init(frame: CGRect) {
-           super.init(frame: frame)
-           backgroundColor = .systemBackground
-           UISetup()
-       }
+        super.init(frame: frame)
+        backgroundColor = .systemBackground
+        UISetup()
+    }
     
     required init?(coder: NSCoder) {
-            super.init(coder: coder)
-            UISetup()
-        }
+        super.init(coder: coder)
+        UISetup()
+    }
     
-    let moedaPicker: UIButton = {
+    // MARK: - UI Components
+ 
+    
+    lazy var moedaPicker: UIButton = {
         let bt = UIButton(type: .system)
         bt.setTitle("Selecione a moeda", for: .normal)
-        bt.translatesAutoresizingMaskIntoConstraints = false
         bt.layer.borderColor = UIColor.systemBlue.cgColor
         bt.layer.borderWidth = 1
         bt.layer.cornerRadius = 8
+        
+        
+        bt.showsMenuAsPrimaryAction = true
+        bt.menu = UIMenu(title: "Escolha a Moeda", children: [
+            UIAction(title: "Carregando...", attributes: .disabled, handler: { _ in })
+        ])
+        
         return bt
     }()
-
-    var moedaSelecionada:Moeda?
     
-    var moedaOrige: UITextField = {
+    // Propriedade para guardar a moeda
+    var moedaSelecionada: Moeda?
+    
+    lazy var moedaOrige: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Digite o valor"
-        tf.translatesAutoresizingMaskIntoConstraints = false
-        tf.keyboardType = .numberPad
+        tf.placeholder = "Valor"
+        tf.keyboardType = .decimalPad
+        tf.textAlignment = .center
+        tf.borderStyle = .roundedRect
         return tf
     }()
     
-    var moedaFinal: UILabel = {
+    lazy var moedaFinal: UILabel = {
         let lb = UILabel()
-        lb.text = "Valor em reais"
-        lb.translatesAutoresizingMaskIntoConstraints = false
+        lb.text = "R$ 0,00"
+        lb.textAlignment = .center
+        lb.layer.borderColor = UIColor.systemGray4.cgColor
+        lb.layer.borderWidth = 1
+        lb.layer.cornerRadius = 6
         return lb
     }()
     
-    let converterB: UIButton = {
-        let bt = UIButton()
+    lazy var converterB: UIButton = {
+        let bt = UIButton(type: .system)
         bt.setTitle("Converter", for: .normal)
+        bt.setTitleColor(.white, for: .normal)
         bt.backgroundColor = .systemBlue
-        bt.translatesAutoresizingMaskIntoConstraints = false
         bt.layer.cornerRadius = 8
+        bt.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
         return bt
     }()
     
-    
-    var historico: UIButton = {
-        let bt = UIButton()
+    lazy var historicoB: UIButton = {
+        let bt = UIButton(type: .system)
         bt.setTitle("Histórico", for: .normal)
-        bt.setTitleColor(.systemBlue, for: .normal)
-        bt.layer.borderColor = UIColor.systemBlue.cgColor
-        bt.layer.borderWidth = 2
-        bt.backgroundColor = .clear
-        bt.translatesAutoresizingMaskIntoConstraints = false
+        bt.setTitleColor(.white, for: .normal)
+        bt.backgroundColor = .lightGray
         bt.layer.cornerRadius = 8
-        bt.clipsToBounds = true
+        bt.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
         return bt
     }()
     
+   
+    
+    // Stack Horizontal para o valor de origem e final
+    private lazy var horizontalStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [moedaOrige, moedaFinal])
+        stack.axis = .horizontal
+        stack.spacing = 16
+        stack.distribution = .fillEqually
+        return stack
+    }()
+    
+    // Stack Vertical principal para organizar tudo
+    private lazy var mainStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [moedaPicker, horizontalStack, converterB, historicoB])
+        stack.axis = .vertical
+        stack.spacing = 24
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
     
     
+    // MARK: - Setup
     
     private func UISetup() {
+        // Adiciona apenas a stack principal na view
+        addSubview(mainStack)
         
-        //Adiciona na view
-        addSubview(moedaOrige)
-        addSubview(moedaFinal)
-        addSubview(converterB)
-        addSubview(historico)
-        addSubview(moedaPicker)
-        
-        //Cria os tamanhos e limites dos elementos
+        //  Define a altura dos botões
+        moedaPicker.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        converterB.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        historicoB.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        moedaOrige.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        moedaFinal.heightAnchor.constraint(equalToConstant: 44).isActive = true
+
+     
         NSLayoutConstraint.activate([
-            //Centraliza no meio horizontal
-            moedaPicker.centerXAnchor.constraint(equalTo: leftAnchor, constant: 120),
-            moedaOrige.centerXAnchor.constraint(equalTo: leftAnchor, constant: 120),
-            moedaFinal.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -80),
-            converterB.centerXAnchor.constraint(equalTo: centerXAnchor),
-            historico.centerXAnchor.constraint(equalTo: centerXAnchor),
-            //Coloca no topo (safearealayoutGuide.topanchor) porem a 200 pontos abaixo
-            moedaPicker.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 150),
-            moedaOrige.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 200),
-            moedaFinal.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 200),
-            converterB.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 250),
-            historico.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 300),
+            // Centraliza a stack verticalmente na tela
+            mainStack.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            //Fixa a largura
-            moedaPicker.widthAnchor.constraint(equalToConstant: 143),
-            moedaOrige.widthAnchor.constraint(equalToConstant: 143),
-            moedaFinal.widthAnchor.constraint(equalToConstant: 143),
-            converterB.widthAnchor.constraint(equalToConstant: 150),
-            historico.widthAnchor.constraint(equalToConstant: 150),
-            //Fixa a altura
-            moedaPicker.heightAnchor.constraint(equalToConstant: 50),
-            moedaOrige.heightAnchor.constraint(equalToConstant: 40),
-            moedaFinal.heightAnchor.constraint(equalToConstant: 40)
-            
-            
+            // Prende nas laterais com uma margem de 20 pontos
+            mainStack.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            mainStack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
-            
-        }
-        
     }
-
-
-#Preview {
-    ConversorView()
 }
+
+
+
+
 
