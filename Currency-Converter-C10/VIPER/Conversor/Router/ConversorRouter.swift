@@ -30,14 +30,12 @@ class ConversorRouter: RouterModulos {
         
         return view
     }
+    
+    func irParaHistorico (from view: UIViewController) {
+        let hist = HistoricoRouter()
+        let histVC = hist.criarNavegacaoHistorico()
+        view.navigationController?.pushViewController(histVC, animated: true)
+    }
 }
 
-// Não consegui fazer a navegação, pois a ausência de telas na parte do Historico estava me dando muito trabalho. Acabei não aplicando a navegação em si do Router.
-//extension ConversorRouter {
-//    func abrirTelaHistorico(view: UIViewController) {
-//        let telaHistorico = HistoricoView()
-//        
-//        view.present(telaHistorico, animated: true)
-//    }
-//}
 

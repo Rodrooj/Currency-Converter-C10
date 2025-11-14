@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BFV-Tc-sGZ">
-                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BFV-Tc-sGZ">
+                                <rect key="frame" x="0.0" y="186" width="393" height="598"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="historicoCell" id="OR1-gy-LfX">
@@ -32,14 +32,23 @@
                                 </prototypes>
                                 <sections/>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Historico:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xf7-ns-g6u">
+                                <rect key="frame" x="9" y="126" width="186" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="43"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="BFV-Tc-sGZ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="150" id="87U-ok-Q7n"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="BFV-Tc-sGZ" secondAttribute="bottom" id="NsA-Tr-9CX"/>
                             <constraint firstItem="BFV-Tc-sGZ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="cmc-Yn-zLl"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="BFV-Tc-sGZ" secondAttribute="trailing" id="jpm-QY-lvE"/>
                             <constraint firstItem="BFV-Tc-sGZ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="mfB-AF-qiJ"/>
+                            <constraint firstItem="BFV-Tc-sGZ" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="118" id="tSa-kz-hPt"/>
                         </constraints>
                     </view>
                     <connections>
@@ -47,7 +56,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="139" y="131"/>
+            <point key="canvasLocation" x="138.1679389312977" y="130.98591549295776"/>
         </scene>
     </scenes>
     <resources>
