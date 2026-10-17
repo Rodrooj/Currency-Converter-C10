@@ -1,51 +1,55 @@
-# Documentação Técnica - Currency Converter
+# Currency Converter — documentação técnica
 
-**Projeto:** Currency-Converter-C10 [cite: 5]
+## 1. Visão geral
 
-## 1. Visão Geral do Projeto
-O **Currency Converter** é um aplicativo mobile desenvolvido para iOS, projetado para realizar conversões de moedas [cite: 5]. O aplicativo permite que os usuários verifiquem taxas de câmbio e também conta com um módulo de histórico, onde as conversões passadas podem ser consultadas [cite: 5]. O desenvolvimento seguiu práticas modernas de engenharia de software para plataformas Apple [cite: 5].
+Aplicativo iOS em Swift/UIKit desenvolvido como estudo de arquitetura VIPER e do padrão Adapter. O projeto contém um módulo de conversão e um módulo de histórico, mas algumas partes ainda estão em estágio de protótipo.
 
-## 2. Tecnologias Implementadas
-* **Linguagem:** Swift [cite: 5].
-* **Plataforma:** iOS (Desenvolvido no Xcode) [cite: 5].
-* **Interface Gráfica:** Storyboards (como `Main.storyboard`, `LaunchScreen.storyboard` e `Historico.storyboard`) e UIKit [cite: 5].
-* **Arquitetura:** O projeto utiliza o padrão arquitetural **VIPER** (View, Interactor, Presenter, Entity, Router), que promove uma alta separação de responsabilidades, facilitando a manutenção e escalabilidade do código [cite: 5].
+## 2. Estado atual e limites conhecidos
 
-## 3. Estrutura do Projeto
-O código-fonte está estruturado no diretório principal `Currency-Converter-C10/`, dividido da seguinte forma [cite: 5]:
+### Conversão
 
-### VIPER (Arquitetura Principal)
-A lógica principal do aplicativo está organizada em módulos dentro da pasta `VIPER/` [cite: 5]:
+O código atual **não consulta uma API de câmbio real**. Em `VIPER/Conversor/Interactor/ConversorInteractor.swift`, `API.criarMoeda(type:)` cria moedas com valores demonstrativos fixos (BRL = 1, USD = 5, EUR = 6), e `callAPI` apenas aguarda um pequeno intervalo antes de retornar esses objetos.
 
-* **Módulo Conversor:** Responsável pela tela e lógica de conversão de moedas [cite: 5].
-    * `Entity/`: Contém os modelos de dados (`ConversorEntity.swift`) [cite: 5].
-    * `Interactor/`: Lida com as regras de negócio e requisições de dados (`ConversorInteractor.swift`) [cite: 5].
-    * `Presenter/`: Atua como mediador entre a View e o Interactor (`ConversorPresenter.swift`) [cite: 5].
-    * `View/`: Contém a interface do usuário e controladores (`ConversorView.swift`, `ConversorViewController.swift`) [cite: 5].
-    * `Router/`: Gerencia a navegação a partir deste módulo (`ConversorRouter.swift`) [cite: 5].
-    * `Protocols/`: Define os protocolos (interfaces) para a comunicação entre as camadas VIPER (`ConversorProtocols.swift`) [cite: 5].
+Esses números são exemplos para exercitar o fluxo entre as camadas, não cotações atuais nem dados apropriados para decisões financeiras. Uma futura integração real deve definir fonte, data/hora da cotação, direção da taxa, precisão e tratamento de falhas de rede.
 
-* **Módulo Histórico:** Responsável por exibir o registro de conversões realizadas [cite: 5].
-    * Segue a mesma estrutura VIPER: `Entity`, `Interactor`, `Presenter`, `View` (incluindo `Historico.storyboard`), `Router` e `Protocols` [cite: 5].
+### Histórico
 
-### Outros Componentes
-* `Assets.xcassets/`: Contém os recursos visuais do aplicativo, como ícones (`AppIcon.appiconset`) e cores personalizadas (`AccentColor.colorset`) [cite: 5].
-* `Base.lproj/`: Contém os arquivos de interface primários (`Main.storyboard`, `LaunchScreen.storyboard`) [cite: 5].
-* `Currency-Converter-C10Tests/` e `Currency-Converter-C10UITests/`: Diretórios destinados a testes unitários e testes de interface (UI Tests) [cite: 5].
+O módulo `VIPER/Historico/` contém componentes de arquitetura, mas o fluxo ainda não representa um histórico persistido completo: `obterHistorico(dado:)` não tem implementação, `adaptarRegistro()` produz uma data vazia e não há evidência no código inspecionado de armazenamento durável das conversões.
 
-## 4. Funcionalidades do Sistema
-* **Conversão de Moedas:** A tela principal permite ao usuário inserir valores e obter a conversão com base em taxas de câmbio (Módulo `Conversor`) [cite: 5].
-* **Histórico de Conversões:** Uma tela dedicada para visualizar o registro das operações anteriores realizadas pelo usuário (Módulo `Historico`) [cite: 5].
+### Testes
 
-## 5. Como Utilizar a Aplicação
-Para executar o sistema em um ambiente de desenvolvimento local, siga as instruções abaixo:
-    
-### 5.1. Pré-requisitos
-* Computador macOS.
-* Xcode instalado (versão compatível com a versão do Swift utilizada no projeto).
+Os diretórios de testes unitários e de interface existem, mas `Currency_Converter_C10Tests.swift` ainda contém apenas o teste de exemplo. A existência desses diretórios não significa que a conversão e o histórico já tenham cobertura automatizada.
 
-### 5.2. Execução
-1. Clone o repositório do projeto.
-2. Navegue até o diretório do projeto e abra o arquivo `Currency-Converter-C10.xcworkspace` (ou `.xcodeproj` se não houver dependências do CocoaPods configuradas externamente) no Xcode [cite: 5].
-3. Selecione um simulador iOS (ex: iPhone 14 Pro) ou conecte um dispositivo físico.
-4. Pressione o botão **Run** (Play) no Xcode ou use o atalho `Cmd + R` para compilar e executar o aplicativo.
+## 3. Tecnologias e arquitetura
+
+- **Linguagem:** Swift.
+- **Plataforma/UI:** iOS, UIKit e Storyboards.
+- **Arquitetura:** VIPER — View, Interactor, Presenter, Entity e Router.
+- **Padrões em estudo:** Adapter e Factory.
+
+Estrutura do módulo principal:
+
+- `Entity/`: modelos de dados, como `Moeda`.
+- `Interactor/`: regras de conversão e preparação dos dados.
+- `Presenter/`: mediação entre View e Interactor.
+- `View/`: interface e controlador.
+- `Router/`: navegação.
+- `Protocols/`: contratos entre as camadas.
+
+O módulo `Historico` possui estrutura semelhante, com implementação ainda incompleta conforme descrito acima.
+
+## 4. Executar localmente
+
+1. Use um Mac com uma versão compatível do Xcode.
+2. Abra `Currency-Converter-C10.xcodeproj` (ou o workspace caso ele esteja presente e seja necessário).
+3. Selecione um simulador iOS compatível.
+4. Compile e execute o esquema do aplicativo.
+
+Os testes precisam ser executados pelo Xcode ou por um ambiente macOS com os SDKs Apple adequados; eles não foram executados durante esta revisão.
+
+## 5. Próximos passos
+
+- Definir se o objetivo permanece demonstrar padrões arquiteturais com dados simulados ou se haverá integração com uma API real de câmbio.
+- Criar testes para as conversões BRL/USD/EUR, entradas inválidas e precisão numérica.
+- Definir e implementar o armazenamento do histórico e a data de cada registro.
+- Atualizar o README novamente quando essas funcionalidades forem implementadas e validadas.
